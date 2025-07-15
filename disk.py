@@ -15,7 +15,7 @@ class Disk:
             if space and len(allocated) < n_blocks:                      #Creates an allocation list with indexes allocated
                 allocated.append(index)                                  #Changes those indexes in free_blocks_list to false
                 self.free_blocks_list[index] = False
-        return allocated
+        return allocated                          #returns indexes of blocks allocated
     
     def write_block(self, index, data):
         if len(self.block_list[index].data + data) <= 64:   #limit block size to 64 bytes

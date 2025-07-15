@@ -1,10 +1,11 @@
 from  fs_objects import Directory, File
-
+from disk import Disk, Block
 class Filesystem:
     
     def __init__(self, root):
         self.root = Directory("root")
         self.cwd = self.root
+        self.disk = Disk()
     
     def mkdir(self, name):
         if name in self.cwd.children:
@@ -34,3 +35,40 @@ class Filesystem:
                 print(name + "/")
             else:
                 print (name, " ")
+    def pwd(self):
+        temp = self.cwd
+        pwd_list = []
+        while temp:
+            pwd_list.append(temp.name)
+            temp = temp.parent
+        pwd_list.reverse()
+        for item in pwd_list:
+            print(item + "/", end="")
+    
+    def create(self, name):
+        if name in self.cwd.children:
+            print("File already exists")       #if file already exists
+        else:
+            added_file = File(name)           #create new file
+            self.cwd.add_child(name, added_file)      #update cwd.children
+
+    def write(self, name, data):
+        if not (name in self.cwd.children):
+            print("File doesn't exist")          #checking if file exists
+        else:
+            for i in range ((len(data)//64) + 1):
+                allocated = self.disk.allocate(1)               #allocate 1 block for each 64 bytes of the data
+                chunk  = data[i*64:(i+1)*64]
+                if not chunk:
+                    break                                       #Detects empty strings, happens when len(data) is exactly a multiple of 64
+                self.disk.write_block(allocated[0], chunk)             #write takes in indices allocated and the data itself
+                self.cwd.children[name].block_indices.append(allocated[0])   #add allocated indices to the block indices the file takes up
+                self.cwd.children[name].size += len(chunk)             #update size
+
+
+            
+            
+                
+
+            
+
