@@ -1,11 +1,12 @@
-from  fs_objects import Directory, File
+from fs_objects import Directory, File
 from disk import Disk, Block
+
 class Filesystem:
     
-    def __init__(self, root):
+    def __init__(self, disk):
         self.root = Directory("root")
         self.cwd = self.root
-        self.disk = Disk()
+        self.disk = disk
     
     def mkdir(self, name):
         if name in self.cwd.children:
@@ -64,6 +65,24 @@ class Filesystem:
                 self.disk.write_block(allocated[0], chunk)             #write takes in indices allocated and the data itself
                 self.cwd.children[name].block_indices.append(allocated[0])   #add allocated indices to the block indices the file takes up
                 self.cwd.children[name].size += len(chunk)             #update size
+
+    def read(self, name):
+        if not (name in self.cwd.children):
+            print("File doesn't exist")
+        else:
+            blocks_to_read = self.cwd.children[name].block_indices
+            for index in blocks_to_read:
+                print(self.disk.read_block(index), end="")
+
+    def rm(self, name):
+        if not (name in self.cwd.children):
+            print("File doesn't exist")
+        else:
+            for index in self.cwd.children[name].block_indices:
+                self.disk.free_blocks_list[index] = True
+                self.disk.block_list[index].data = ""
+  
+            self.cwd.remove_child(name)
 
 
             
