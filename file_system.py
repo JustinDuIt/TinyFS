@@ -45,6 +45,7 @@ class Filesystem:
         pwd_list.reverse()
         for item in pwd_list:
             print(item + "/", end="")
+        print()
     
     def create(self, name):
         if name in self.cwd.children:
@@ -73,6 +74,7 @@ class Filesystem:
             blocks_to_read = self.cwd.children[name].block_indices
             for index in blocks_to_read:
                 print(self.disk.read_block(index), end="")
+            print()
 
     def rm(self, name):
         if not (name in self.cwd.children):
