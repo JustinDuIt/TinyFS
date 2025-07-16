@@ -1,15 +1,15 @@
 # TinyFS
 Simulating a file system.
 
-#Requirement
+## Requirement
 - python3
 
-#Run
+## Run
 ``` bash
 python3 main.py
 ```
 
-#Commands
+## Commands
 - mkdir
 - ls
 - cd
