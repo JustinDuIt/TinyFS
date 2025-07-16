@@ -1,5 +1,6 @@
 from fs_objects import Directory, File
 from disk import Disk, Block
+import pickle
 
 class Filesystem:
     
@@ -85,11 +86,47 @@ class Filesystem:
                 self.disk.block_list[index].data = ""
   
             self.cwd.remove_child(name)
+    
+    def save(self, file_name):
+        dictionary_save = {
+            "disk": self.disk,
+            "root" : self.root,
+            "cwd" : self.path_to_cwd()
+        }
+
+        with open(file_name, "wb") as file:
+            pickle.dump(dictionary_save, file)
+    
+    def load(self, file_name):
+        with open (file_name, "rb") as file:
+            loaded_dict = pickle.load(file)
+        
+        self.disk = loaded_dict["disk"]
+        self.root = loaded_dict["root"]
+        self.cwd = self.root
+        
+        for name in loaded_dict["cwd"][1:]:  # skip "root"
+            self.cwd = self.cwd.get_child(name)
+            if self.cwd is None:
+                print(f"Directory '{name}' not found while loading.")
+                self.cwd = self.root
+                break
+
+    
+    def path_to_cwd(self):
+        temp = self.cwd
+        pwd_list = []
+        while temp:
+            pwd_list.append(temp.name)
+            temp = temp.parent
+        pwd_list.reverse()
+        return pwd_list
+
+
 
 
             
             
-                
 
             
 

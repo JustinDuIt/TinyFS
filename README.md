@@ -18,3 +18,6 @@ python3 main.py
 - write (file)
 - rm (file)
 - pwd
+- save (any name)
+- load (saved name)
+

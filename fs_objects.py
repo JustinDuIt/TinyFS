@@ -9,13 +9,13 @@ class Directory:
             print("File is already in directory")          
         else:
             self.children[name] = obj
-    def get_child(self, name):
+    def get_child(self, name):                  #name of the child
         if not(name in self.children):
             print("Item not found")
         else:
             return self.children[name]
     
-    def remove_child(self, name):
+    def remove_child(self, name):           #name of the child
         if not(name in self.children):
             print("Item not found")
         else:

@@ -35,6 +35,10 @@ def main():
             fs.rm(args[0])
         elif command == "exit":
             break
+        elif command == "save" and args:
+            fs.save(args[0])
+        elif command == "load" and args:
+            fs.load(args[0])
         else:
             print("Unknown command or invalid arguments.")
                                                                                     
