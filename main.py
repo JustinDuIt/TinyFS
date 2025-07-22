@@ -1,7 +1,6 @@
 from disk import Disk, Block
 from file_system import Filesystem
 from fs_objects import Directory, File
-
 def main():
     disk = Disk()
     fs = Filesystem(disk)
@@ -39,6 +38,9 @@ def main():
             fs.save(args[0])
         elif command == "load" and args:
             fs.load(args[0])
+        elif command == "clear":
+            from utils import clear_saves
+            clear_saves()    
         else:
             print("Unknown command or invalid arguments.")
                                                                                     

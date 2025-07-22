@@ -18,6 +18,7 @@ python3 main.py
 - write (file)
 - rm (file)
 - pwd
-- save (any name)
+- save (as a .pkl file)
 - load (saved name)
-
+- exit
+- clear
