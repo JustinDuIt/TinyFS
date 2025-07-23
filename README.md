@@ -15,7 +15,8 @@ python3 main.py
 - cd
 - read (file)
 - create (file)
-- write (file)
+- overwrite (file)
+- append (file)
 - rm (file)
 - pwd
 - save (as a .pkl file)
