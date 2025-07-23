@@ -55,7 +55,7 @@ class Filesystem:
             added_file = File(name)           #create new file
             self.cwd.add_child(name, added_file)      #update cwd.children
 
-    def write(self, name, data):
+    def append(self, name, data):
         if not (name in self.cwd.children):
             print("File doesn't exist")          #checking if file exists
         else:
@@ -111,6 +111,27 @@ class Filesystem:
                 print(f"Directory '{name}' not found while loading.")
                 self.cwd = self.root
                 break
+    
+    def overwrite(self, name, data):
+        if not (name in self.cwd.children):
+            print("File doesn't exist")
+        else:
+            for index in self.cwd.children[name].block_indices:
+                self.disk.free_blocks_list[index] = True
+                self.disk.block_list[index].data = ""
+            
+            self.cwd.children[name].block_indices = []
+            self.cwd.children[name].size = 0
+            
+            for i in range ((len(data)//64) + 1):    #finding out how many blocks the data tasks up
+                allocated = self.disk.allocate(1)               #allocate 1 block for each 64 bytes of the data
+                chunk  = data[i*64:(i+1)*64]
+                if not chunk:
+                    break                                       #Detects empty strings, happens when len(data) is exactly a multiple of 64
+                self.disk.write_block(allocated[0], chunk)             #write takes in indices allocated and the data itself
+                self.cwd.children[name].block_indices.append(allocated[0])   #add allocated indices to the block indices the file takes up
+                self.cwd.children[name].size += len(chunk)             #update size
+                   
 
     
     def path_to_cwd(self):

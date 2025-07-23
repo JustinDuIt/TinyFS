@@ -24,10 +24,14 @@ def main():
             fs.pwd()
         elif command == "create" and args:
             fs.create(args[0])
-        elif command == "write" and len(args) >= 2:
+        elif command == "append" and len(args) >= 2:
             filename = args[0]
             data = " ".join(args[1:])
-            fs.write(filename, data)
+            fs.append(filename, data)
+        elif command == "overwrite" and len(args) >= 2:
+            filename = args[0]
+            data = " ".join(args[1:])
+            fs.overwrite(filename, data)
         elif command == "read" and args:
             fs.read(args[0])
         elif command == "rm" and args:
