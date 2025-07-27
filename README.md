@@ -17,7 +17,8 @@ python3 main.py
 - create (file)
 - overwrite (file)
 - append (file)
-- rm (file)
+- rm (file in cwd)
+- rmdir (empty directory)
 - pwd
 - save (as a .pkl file)
 - load (saved name)

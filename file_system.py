@@ -131,9 +131,16 @@ class Filesystem:
                 self.disk.write_block(allocated[0], chunk)             #write takes in indices allocated and the data itself
                 self.cwd.children[name].block_indices.append(allocated[0])   #add allocated indices to the block indices the file takes up
                 self.cwd.children[name].size += len(chunk)             #update size
-                   
-
     
+    def rmdir(self, name):
+        if not (name in self.cwd.children):
+            print("Directory doesn't exist")
+        else:
+            if self.cwd.children[name].children:
+                print("Directory is not empty")
+            else:
+                self.cwd.remove_child(name)
+                   
     def path_to_cwd(self):
         temp = self.cwd
         pwd_list = []

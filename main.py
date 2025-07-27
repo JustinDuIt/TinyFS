@@ -1,6 +1,7 @@
 from disk import Disk, Block
 from file_system import Filesystem
 from fs_objects import Directory, File
+
 def main():
     disk = Disk()
     fs = Filesystem(disk)
@@ -11,7 +12,7 @@ def main():
         if not user_input:
             continue
 
-        command = user_input[0]
+        command = user_input[0]          
         args = user_input[1:]
 
         if command == "mkdir" and args:
@@ -44,7 +45,9 @@ def main():
             fs.load(args[0])
         elif command == "clear":
             from utils import clear_saves
-            clear_saves()    
+            clear_saves()
+        elif command == "rmdir":
+            fs.rmdir(args[0])
         else:
             print("Unknown command or invalid arguments.")
                                                                                     
