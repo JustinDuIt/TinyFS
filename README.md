@@ -18,7 +18,7 @@ python3 main.py
 - overwrite (file)
 - append (file)
 - rm (file in cwd)
-- rmdir (empty directory)
+- rmdir (empty directory, pwd should be the parent directory)
 - pwd
 - save (as a .pkl file)
 - load (saved name)

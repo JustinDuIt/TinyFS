@@ -38,6 +38,8 @@ def main():
         elif command == "rm" and args:
             fs.rm(args[0])
         elif command == "exit":
+            from utils import clear_saves
+            clear_saves()
             break
         elif command == "save" and args:
             fs.save(args[0])
